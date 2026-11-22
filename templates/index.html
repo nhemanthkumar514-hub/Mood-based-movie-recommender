@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mood-Based Movie Recommender</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ffffff;
+      background-image: url("{{ movies[0]['backdrop_url'] if movies else '' }}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    input[type="text"] {
+      width: 50%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      margin-left: 1rem;
+      background-color: #ff3366;
+      color: white;
+      cursor: pointer;
+    }
+
+    .movie {
+      display: flex;
+      gap: 1rem;
+      background-color: rgba(255, 255, 255, 0.07);
+      padding: 1rem;
+      margin: 1.5rem auto;
+      border-radius: 10px;
+      max-width: 1000px;
+    }
+
+    .movie img {
+      width: 200px;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .movie-details {
+      flex: 1;
+    }
+
+    .movie-details h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #ffcc00;
+    }
+
+    .movie-details p {
+      margin: 0.5rem 0;
+      line-height: 1.5;
+    }
+
+    .trailer {
+      margin-top: 0.5rem;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #ff6600;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .trailer:hover {
+      background-color: #ff8533;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>🎬 Mood-Based Movie Recommender</h1>
+    <form action="/recommend" method="post">
+      <input type="text" name="mood" placeholder="e.g., I feel excited, I feel low" required>
+      <button type="submit">Get Movies</button>
+    </form>
+
+    {% if query %}
+      <h2 style="text-align: center;">Results for: "{{ query }}"</h2>
+    {% endif %}
+
+    {% for movie in movies %}
+      <div class="movie" style="background-image: url('{{ movie.backdrop_url }}'); background-size: cover; background-position: center;">
+        <img src="{{ movie.poster_url }}" alt="Poster">
+        <div class="movie-details" style="background-color: rgba(0, 0, 0, 0.6); padding: 1rem; border-radius: 10px;">
+          <h2>{{ movie.title }}</h2>
+          <p><strong>Genre:</strong> {{ movie.genre }}</p>
+          <p><strong>Director:</strong> {{ movie.director }}</p>
+          <p><strong>Cast:</strong> {{ movie.cast }}</p>
+          <p>{{ movie.overview }}</p>
+          <a class="trailer" href="{{ movie.trailer }}" target="_blank">▶ Watch Trailer</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

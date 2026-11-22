@@ -1,0 +1,17 @@
+# Large datasets
+Credit 10k.csv
+processed_movies_full.csv
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
